@@ -33,7 +33,6 @@ function multiple(docClient, kvps) {
       }
     })
   });
-  console.log(JSON.stringify(putRequests, null, 2))
   if(!validate.kvp(
     putRequests.map(pr => pr.PutRequest.Item)
   )) return new Error('One or more kvps failed validation.');
