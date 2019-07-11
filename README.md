@@ -1,23 +1,23 @@
 # yammer-kvs
- Yammer Key Value Store npm package. Basically only for my own use.
+Yammer Key Value Store npm package. Basically only for my own use.
 
- Hooks to my AWS DynamoDB table (`yammer_kvs`) and provides very high-level Key-Value CRUD (currently only CR) queries.
+Hooks to my AWS DynamoDB table (`yammer_kvs`) and provides very high-level Key-Value CRUD (currently only CR) queries.
 
- # Reference
+# Reference
 
- ## Read
+## Read
 
- ### Single record
- Reads a single value from a given key.
+### Single record
+Reads a single value from a given key.
 
- Usage: `yammerkvs.read.single('MY_KEY')`
+Usage: `yammerkvs.read.single('MY_KEY')`
 
- Sample response: `'This is the value of MY_KEY'`
+Sample response: `'This is the value of MY_KEY'`
 
- ### One or more records
- Reads one or more records from one or more given keys.
+### One or more records
+Reads one or more records from one or more given keys.
 
- Usage:
+Usage:
 ```js
 yammerkvs.read.multiple([
   'MY_KEY',
