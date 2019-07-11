@@ -10,16 +10,22 @@ Hooks to my AWS DynamoDB table (`yammer_kvs`) and provides very high-level Key-V
 ### Single record
 Reads a single value from a given key.
 
-Usage: `yammerkvs.read.single('MY_KEY')`
+Usage: 
+```js
+await yammerkvs.read.single('MY_KEY')
+```
 
-Sample response: `'This is the value of MY_KEY'`
+Sample response: 
+```js
+'This is the value of MY_KEY'
+```
 
 ### One or more records
 Reads one or more records from one or more given keys.
 
 Usage:
 ```js
-yammerkvs.read.multiple([
+await yammerkvs.read.multiple([
   'MY_KEY',
   'MY_KEY2'
 ]);
@@ -40,7 +46,7 @@ Upserts a single key/value pair.
 
 Usage:
 ```js
-yammerkvs.update.single({
+await yammerkvs.update.single({
   MY_KEY: 'New value for MY_KEY.'
 });
 ```
@@ -57,7 +63,7 @@ Upserts one or more key/value pairs.
 
 Usage:
 ```js
-yammerkvs.update.multiple({
+await yammerkvs.update.multiple({
   MY_KEY: 'Another value for MY_KEY',
   MY_KEY2: 'New value for MY_KEY2'
 });
