@@ -5,7 +5,6 @@ const util = require('../util');
 
 function single(config, kvp) {
   const nKvp = normalize.kvp(kvp, config.user.Prefix);
-  console.log(nKvp)
   if (!validate.kvp([nKvp])) return new Error('Key failed validation.');
   return config.client.update({
     TableName: tableName,

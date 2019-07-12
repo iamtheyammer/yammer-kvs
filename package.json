@@ -1,6 +1,6 @@
 {
   "name": "yammer-kvs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Yammer Key Value Store",
   "main": "src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/iamtheyammer/yammer-kvs.git"
   },
   "author": "iamtheyammer",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/iamtheyammer/yammer-kvs/issues"
   },
