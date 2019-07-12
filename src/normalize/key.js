@@ -1,0 +1,1 @@
+module.exports = (key, prefix) => prefix ? prefix + key : key;

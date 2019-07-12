@@ -1,11 +1,13 @@
 const normalize = require('../normalize');
 const validate = require('../validate');
 const tableName = require('../values').tableName;
+const util = require('../util');
 
-function single(docClient, kvp) {
-  const nKvp = normalize.kvp(kvp);
+function single(config, kvp) {
+  const nKvp = normalize.kvp(kvp, config.user.Prefix);
+  console.log(nKvp)
   if (!validate.kvp([nKvp])) return new Error('Key failed validation.');
-  return docClient.update({
+  return config.client.update({
     TableName: tableName,
     Key: {
       key: nKvp.key
@@ -21,13 +23,13 @@ function single(docClient, kvp) {
   }).promise().then(res => res.Attributes);
 }
 
-function multiple(docClient, kvps) {
+function multiple(config, kvps) {
   const putRequests = [];
   Object.keys(kvps).forEach(key => {
     putRequests.push({
       PutRequest: {
         Item: {
-          key,
+          key: util.applyPrefix(config.user.Prefix, key),
           value: kvps[key]
         }
       }
@@ -36,7 +38,7 @@ function multiple(docClient, kvps) {
   if(!validate.kvp(
     putRequests.map(pr => pr.PutRequest.Item)
   )) return new Error('One or more kvps failed validation.');
-  return docClient.batchWrite({
+  return config.client.batchWrite({
     RequestItems: {
       [tableName]: putRequests
     }

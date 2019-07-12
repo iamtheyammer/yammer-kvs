@@ -1,0 +1,1 @@
+module.exports = (prefix, str) => prefix ? str.replace(prefix, '') : str;

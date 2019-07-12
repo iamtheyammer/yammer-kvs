@@ -1,5 +1,5 @@
-module.exports = (kvp) => (
+module.exports = (kvp, prefix) => (
   {
-    [kvp.key]: kvp.value
+    [prefix ? kvp.key.replace(prefix, '') : kvp.key]: kvp.value
   }
 );

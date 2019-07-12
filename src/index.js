@@ -1,5 +1,7 @@
 const AWS = require("aws-sdk");
+
 const actions = require('./actions');
+const configActions = require('./config');
 
 AWS.config.update({
   region: "us-east-2"
@@ -7,26 +9,36 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-// async function test() {
-//   const data = await injectClient(actions.update.multiple)({
-//     MODIFY_TEST: 'I did.',
-//     MODIFY_TEST2: 'I did.'
-//   });
-//   console.log(data);
-// }
+let config = {
+  client: docClient,
+  user: {
+    Prefix: '',
+    TableName: 'yammer_kvs'
+  }
+}
 
-function injectClient(func) {
-  return (param) => func(docClient, param);
+function updateConfig(newConfig) {
+  config = configActions.set(config, newConfig);
+  return config.user;
+}
+
+function injectConfig(func) {
+  return (param) => func(config, param);
 }
 
 module.exports = {
   read: {
-    single: injectClient(actions.read.single),
-    multiple: injectClient(actions.read.multiple)
+    single: injectConfig(actions.read.single),
+    multiple: injectConfig(actions.read.multiple)
   },
   update: {
-    single: injectClient(actions.update.single),
-    multiple: injectClient(actions.update.multiple)
+    single: injectConfig(actions.update.single),
+    multiple: injectConfig(actions.update.multiple)
+  },
+  config: {
+    set: updateConfig,
+    get: () => config.user,
+    setAWS: AWS.config.update
   }
 }
 

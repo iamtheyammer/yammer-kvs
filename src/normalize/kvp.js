@@ -1,7 +1,8 @@
-module.exports = (kvp) => {
+module.exports = (kvp, prefix) => {
   const kvpObj = {
-    key: Object.keys(kvp)[0]
+    key: (prefix ? prefix : '') + Object.keys(kvp)[0],
+    value: Object.values(kvp)[0]
   };
-  kvpObj.value = kvp[kvpObj.key];
+  // kvpObj.value = kvp[kvpObj.key];
   return kvpObj;
 }
