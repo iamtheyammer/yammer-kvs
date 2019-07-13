@@ -1,6 +1,6 @@
-workflow "New workflow" {
-  on = "push"
+workflow "Publish on release" {
   resolves = ["Publish package"]
+  on = "release"
 }
 
 action "Publish package" {
