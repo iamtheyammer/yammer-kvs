@@ -26,9 +26,42 @@ Super simple!
 8. Enter `value` for the field name, and some test text
 9. Click on save towards the bottom right
 
-### Changing yammer-kvs config
-
 **If you set your table name to `yammer_kvs`, and your AWS region is `us-east-2`, you're done.** Otherwise, follow these instructions to get yammer-kvs working with your config.
+
+## Command line instructions
+
+### Create table
+
+Save this as `input.json`:
+
+```json
+{
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "key",
+      "AttributeType": "S"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "WriteCapacityUnits": 5,
+    "ReadCapacityUnits": 5
+  },
+  "TableName": "yammer_kvs",
+  "KeySchema": [
+    {
+      "KeyType": "HASH",
+      "AttributeName": "key"
+    }
+  ]
+}
+```
+
+Then, run:
+```shell
+aws dynamodb create-table --cli-input-json file://input.json
+```
+
+## Changing yammer-kvs config
 
 Right after importing yammer-kvs in your code, add this code, tailored to your needs:
 

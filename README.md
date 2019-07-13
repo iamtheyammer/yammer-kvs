@@ -5,7 +5,7 @@ Yammer Key/Value Store npm package.
 
 This package wraps around AWS's DynamoDB and turns it into a Key/Value Store (KVS). Keys are of a fixed schema (see [Validation](#Validation)). [It's even about 4% faster than using `aws-sdk`!](/docs/speedTesting.md) (tested reading a single key's value multiple times)
 
-It expects that you have a primary key named `key`.
+It expects that you have a primary key named `key`. See [this](/docs/dynamoConfig.md) document for DynamoDB configuration instructions.
 
 # Reference
 
