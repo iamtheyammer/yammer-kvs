@@ -133,10 +133,10 @@ Sample response:
 `yammer_kvs` only accepts keys that match this regex: `/[A-Z0-9_]+/`. You'll recieve an error if a specified key doesn't match. All keys in a query must match to be sent to Amazon.
 
 Examples:
-- ✅ `MY_KEY`
-- ✅ `MY_2ND_KEY`
+- ✅ `MY_KEY` - uppercase letters and underscores only
+- ✅ `MY_2ND_KEY` - ^
 - ❌ `my_key` - lowercase letters are not allowed
-- ❌ `MY_KEY` - dashes are not allowed
+- ❌ `MY-KEY` - dashes are not allowed
 - ❌ `THIS_KEY_IS_$12.49` - `$` and `.` not allowed
 
 Your request will also error out if you have a key without a value.
