@@ -6,13 +6,13 @@ function multiple(config, keys) {
   const requestItems = keys.map((key) => ({ key: util.applyPrefix(config.user.Prefix, key) }));
   return config.client.batchGet({
     RequestItems: {
-      [tableName]: {
+      [config.user.TableName]: {
         Keys: requestItems
       }
     }
   }).promise().then((data => {
     let res = {}
-    data['Responses'][tableName].forEach((kvp) => {
+    data['Responses'][config.user.TableName].forEach((kvp) => {
       res[util.removePrefix(config.user.Prefix, kvp.key)] = kvp.value
     });
     return res;
