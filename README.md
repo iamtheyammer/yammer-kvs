@@ -137,6 +137,9 @@ Sample response:
 ```
 
 # Validation
+
+**This section only applies if `ValidateKeys` is set to true in your config. It's false by default.**
+
 `yammer_kvs` only accepts keys that match this regex: `/[A-Z0-9_]+/`. You'll recieve an error if a specified key doesn't match. All keys in a query must match to be sent to Amazon.
 
 Examples:
