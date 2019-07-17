@@ -13,7 +13,8 @@ let config = {
   client: docClient,
   user: {
     Prefix: '',
-    TableName: 'yammer_kvs'
+    TableName: 'yammer_kvs',
+    ValidateKeys: false
   }
 }
 

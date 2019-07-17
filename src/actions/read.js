@@ -1,6 +1,5 @@
 const normalize = require('../normalize');
 const validate = require('../validate');
-const tableName = require('../values').tableName;
 const util = require('../util');
 
 function multiple(config, keys) {
@@ -22,7 +21,7 @@ function multiple(config, keys) {
 
 function single(config, key) {
   return config.client.get({
-    TableName: tableName,
+    TableName: config.user.TableName,
     Key: {
       key: util.applyPrefix(config.user.Prefix, key)
     }

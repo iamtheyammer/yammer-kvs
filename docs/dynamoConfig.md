@@ -2,7 +2,7 @@
 
 Super simple!
 
-## Web Portal Instructions
+## Web Portal Instructions (easier)
 
 ### Create table
 

@@ -1,13 +1,14 @@
 const normalize = require('../normalize');
 const validate = require('../validate');
-const tableName = require('../values').tableName;
 const util = require('../util');
 
 function single(config, kvp) {
   const nKvp = normalize.kvp(kvp, config.user.Prefix);
-  if (!validate.kvp([nKvp])) return new Error('Key failed validation.');
+  if(config.user.ValidateKeys === true) {
+    if (!validate.kvp([nKvp])) return new Error('Key failed validation.');
+  }
   return config.client.update({
-    TableName: tableName,
+    TableName: config.user.TableName,
     Key: {
       key: nKvp.key
     },
@@ -34,12 +35,14 @@ function multiple(config, kvps) {
       }
     })
   });
-  if(!validate.kvp(
-    putRequests.map(pr => pr.PutRequest.Item)
-  )) return new Error('One or more kvps failed validation.');
+  if(config.user.ValidateKeys === true) {
+    if (!validate.kvp(
+      putRequests.map(pr => pr.PutRequest.Item)
+    )) return new Error('One or more kvps failed validation.');
+  }
   return config.client.batchWrite({
     RequestItems: {
-      [tableName]: putRequests
+      [config.user.TableName]: putRequests
     }
   }).promise();
 }
