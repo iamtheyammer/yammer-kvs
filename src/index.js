@@ -1,16 +1,15 @@
-const AWS = require("aws-sdk");
+const DynamoDB = require("aws-sdk/clients/dynamodb");
 
 const actions = require('./actions');
 const configActions = require('./config');
 
-AWS.config.update({
-  region: "us-east-2"
-});
-
-const docClient = new AWS.DynamoDB.DocumentClient();
+const dynamoAPIVersion = '2012-08-10';
 
 let config = {
-  client: docClient,
+  client: new DynamoDB.DocumentClient({
+    region: 'us-east-2',
+    apiVersion: dynamoAPIVersion
+  }),
   user: {
     Prefix: '',
     TableName: 'yammer_kvs',
@@ -25,6 +24,23 @@ function updateConfig(newConfig) {
 
 function injectConfig(func) {
   return (param) => func(config, param);
+}
+
+function updateDynamoConfig(dynamoConfig) {
+  config.client = new DynamoDB.DocumentClient({
+    service: new DynamoDB({
+      // set region if not set in dynamoConfig
+      ...{
+        region: 'us-east-2'
+      },
+      // set dynamoConfig on top of default region
+      ...dynamoConfig,
+      // set apiVersion on top of all
+      ...{
+        apiVersion: dynamoAPIVersion
+      }
+    })
+  });
 }
 
 module.exports = {
@@ -83,12 +99,21 @@ module.exports = {
      * like your region.
      */
     aws: {
-      setRegion: (region) => AWS.config.update({region}),
+      /**
+       * Allows you to set the AWS region to use.
+       * @param {String} region - The region you'd like to use, like `us-east-2`.\
+       * @returns nothing
+       */
+      setRegion: (region) => {
+        updateDynamoConfig({region})
+      },
      /**
-      * Access to the `AWS.config.update` function. Useful for setting region.
-      * @param {Object} settings - Settings to pass to `AWS.config.update`
+      * Allows you to pass in settings to the DynamoDB constructor. See this page
+      * for details: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property.
+      * @param {Object} settings - Settings to pass to the DynamoDB constructor.
+      * @returns nothing
       */
-      configUpdate: (settings) => AWS.config.update(settings)
+      configUpdate: updateDynamoConfig
     }
   }
 }

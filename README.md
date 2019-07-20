@@ -112,29 +112,24 @@ yammerkvs.config.set({
 This will return the new config object, so the same response you'd get from `yammerkvs.config.get()`.
 
 ### Set AWS
-Allows you to access the AWS SDK config set function (`AWS.config.update`)
+
+Allows you to access the `DynamoDB` constructor to add things like region, access key id, etc. See [this](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) document from AWS about the options you can put in here.
 
 ```js
-yammerkvs.config.setAWS({
-  region: "us-east-2"
-});
+yammerkvs.config.aws.configUpdate({
+  region: 'us-east-2',
+  endpoint: 'https://dynamodb.us-east-2.amazonaws.com'
+})
 ```
 
-### Get
-Gives you back your current config.
+### Set region
+
+Allows you to set only the AWS region.
 
 ```js
-yammerkvs.config.get()
+yammerkvs.config.aws.setRegion('us-east-2')
 ```
 
-Sample response:
-```js
-{
-  Prefix: 'YMR_',
-  TableName: 'yammer_kvs',
-  ValidateKeys: false,
-}
-```
 
 # Validation
 
